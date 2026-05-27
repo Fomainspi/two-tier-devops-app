@@ -637,39 +637,39 @@ rm -rf frontend/.git
 git rm --cached frontend
 Re-add folder normally.
 
-## 10. Commands Reference
+# 10. Commands Reference
 
 <img width="910" height="457" alt="image" src="https://github.com/user-attachments/assets/db47b4c6-ebb0-4a6d-b336-14badf344b9f" />
 
 
-## 11. Best Practices
+# 11. Best Practices
 ### Docker Best Practices
 •	avoid hardcoded container names
 •	use environment variables
 •	keep images lightweight
 •	use .dockerignore
 •	separate services properly
-________________________________________
-Git Best Practices
+
+### Git Best Practices
 •	commit frequently
 •	use meaningful commit messages
 •	avoid committing secrets
 •	use branches
-________________________________________
-CI/CD Best Practices
+
+### CI/CD Best Practices
 •	automate deployments
 •	use cleanup stages
 •	separate build and deploy stages
 •	avoid manual deployments
-________________________________________
-Security Best Practices
+
+### Security Best Practices
 •	avoid root containers in production
 •	protect secrets
 •	avoid exposing unnecessary ports
 •	use least privilege
-________________________________________
-12. Real-World DevOps Concepts
-This project reflects real company workflows.
+
+# 12. Real-World DevOps Concepts
+### This project reflects real company workflows.
 Real companies use:
 •	GitHub
 •	Jenkins
@@ -685,8 +685,8 @@ CI/CD pipeline starts
 Containers build automatically
        ↓
 Application deploys automatically
-________________________________________
-13. Final Deployment Flow
+
+# 13. Final Deployment Flow
 Developer
    ↓
 Git Commit
@@ -708,10 +708,10 @@ Frontend Container
 Backend Container
    ↓
 Application Available
-________________________________________
-14. Conclusion
-This project covered a complete beginner-to-intermediate DevOps workflow.
-Key concepts learned:
+
+# 14. Conclusion
+## This project covered a complete beginner-to-intermediate DevOps workflow.
+### Key concepts learned:
 •	Linux administration
 •	Git and GitHub
 •	Node.js backend development
@@ -724,7 +724,8 @@ Key concepts learned:
 •	Port management
 •	CI/CD automation
 •	Infrastructure debugging
-This project reflects real-world DevOps engineering practices used in modern companies.
+
+## This project reflects real-world DevOps engineering practices used in modern companies.
 By completing this project, the learner gains hands-on experience with:
 •	application deployment
 •	automation
@@ -732,7 +733,8 @@ By completing this project, the learner gains hands-on experience with:
 •	CI/CD workflows
 •	DevOps troubleshooting
 •	infrastructure concepts
-This forms a strong foundation for advanced DevOps topics such as:
+
+## This forms a strong foundation for advanced DevOps topics such as:
 •	Kubernetes
 •	Terraform
 •	AWS deployment
@@ -741,6 +743,21 @@ This forms a strong foundation for advanced DevOps topics such as:
 •	Advanced CI/CD pipelines
 •	Cloud-native architectures
 
+
+## Author
+
+**William Foma**  
+DevOps Engineer | Kubernetes | AWS & Cloud Infrastructure | CI/CD Automation | Terraform | Docker  
+
+This project was built as part of a hands-on DevOps learning journey covering:
+
+- Linux
+- Git & GitHub
+- Docker & Docker Compose
+- Jenkins CI/CD
+- Frontend & Backend Integration
+- Container Networking
+- Deployment Automation
 
 
 
