@@ -1,6 +1,6 @@
-## Building a Two-Tier Application with Docker, GitHub, Jenkins, and CI/CD
+# Building a Two-Tier Application with Docker, GitHub, Jenkins, and CI/CD
 
-# Table of Contents
+## Table of Contents
 1.	Project Introduction
 2.	Environment Setup
 3.	Project Structure
