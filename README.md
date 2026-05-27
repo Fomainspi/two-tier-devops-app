@@ -77,6 +77,77 @@ Docker Compose Deployment
 
 <img width="615" height="320" alt="image" src="https://github.com/user-attachments/assets/e8cb2f69-82e0-4b7b-ad81-80bf584a3004" />
 
+## 1.5 Why These Technologies Were Chosen
 
+### Linux
+Linux is the standard operating system used in cloud and DevOps environments.
+Most production servers use Linux.
+_______________________________
+### Git and GitHub
+Git allows developers to:
+•	track changes
+•	collaborate
+•	rollback code
+•	manage versions
+GitHub hosts repositories online.
+________________________________________
+### Node.js
+Node.js allows JavaScript to run on the server side.
+Benefits:
+•	lightweight
+•	fast
+•	large ecosystem
+•	easy API development
+________________________________________
+### React.js
+React is a frontend JavaScript framework.
+Benefits:
+•	reusable components
+•	fast rendering
+•	modern frontend architecture
+________________________________________
+### Docker
+Docker packages applications into containers.
+Benefits:
+•	consistency
+•	portability
+•	isolation
+•	reproducibility
+________________________________________
+### Docker Compose
+Docker Compose manages multiple containers together.
+Benefits:
+•	easier deployments
+•	simplified networking
+•	centralized configuration
+________________________________________
+### Jenkins
+Jenkins automates:
+•	building
+•	testing
+•	deployment
+•	CI/CD pipelines
+Benefits:
+•	automation
+•	repeatability
+•	reduced manual work
+
+# 2. Environment Setup
+2.1 Linux Setup
+This project was developed using Linux.
+Linux is highly preferred in DevOps because:
+•	lightweight
+•	powerful CLI
+•	cloud compatibility
+•	automation friendly
+Ubuntu or WSL Ubuntu can be used.
+
+## 2.2 Updating Linux Packages
+Always update packages before installations.
+Command:
+sudo apt update && sudo apt upgrade -y
+
+Explanation:
+<img width="540" height="156" alt="image" src="https://github.com/user-attachments/assets/1195e4c7-00ee-41de-af22-10aeafd2228d" />
 
 
