@@ -236,31 +236,15 @@ docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword
 
 <img width="244" height="254" alt="image" src="https://github.com/user-attachments/assets/b831659f-476a-4941-89b0-14bdeba8fb04" />
 
-two-tier-app/
-│
-├── backend/
-├── frontend/
-├── docker-compose.yml
-├── Jenkinsfile
-└── .gitignore
-
-
 ## 3.2 Backend Structure
-backend/
-│
-├── Dockerfile
-├── package.json
-├── package-lock.json
-└── server.js
+
+<img width="244" height="175" alt="image" src="https://github.com/user-attachments/assets/f240134a-faaa-4532-9a4f-6341e9495d71" />
+
 
 ## 3.3 Frontend Structure
-frontend/
-│
-├── Dockerfile
-├── package.json
-├── public/
-├── src/
-└── .gitignore
+
+<img width="347" height="204" alt="image" src="https://github.com/user-attachments/assets/6f983640-49af-45f5-bd38-db99f5d270d1" />
+
 
 ## 3.4 Important Files
 ### server.js
