@@ -82,7 +82,7 @@ Docker Compose Deployment
 ### Linux
 Linux is the standard operating system used in cloud and DevOps environments.
 Most production servers use Linux.
-_______________________________
+
 ### Git and GitHub
 Git allows developers to:
 •	track changes
@@ -90,7 +90,7 @@ Git allows developers to:
 •	rollback code
 •	manage versions
 GitHub hosts repositories online.
-________________________________________
+
 ### Node.js
 Node.js allows JavaScript to run on the server side.
 Benefits:
@@ -98,14 +98,14 @@ Benefits:
 •	fast
 •	large ecosystem
 •	easy API development
-________________________________________
+
 ### React.js
 React is a frontend JavaScript framework.
 Benefits:
 •	reusable components
 •	fast rendering
 •	modern frontend architecture
-________________________________________
+
 ### Docker
 Docker packages applications into containers.
 Benefits:
@@ -113,14 +113,14 @@ Benefits:
 •	portability
 •	isolation
 •	reproducibility
-________________________________________
+
 ### Docker Compose
 Docker Compose manages multiple containers together.
 Benefits:
 •	easier deployments
 •	simplified networking
 •	centralized configuration
-________________________________________
+
 ### Jenkins
 Jenkins automates:
 •	building
@@ -151,5 +151,306 @@ sudo apt update && sudo apt upgrade -y
 Explanation:
 
 <img width="540" height="156" alt="image" src="https://github.com/user-attachments/assets/1195e4c7-00ee-41de-af22-10aeafd2228d" />
+
+
+## 2.3 Installing Git
+Install Git:
+sudo apt install git -y
+Verify installation:
+git --version
+
+## 2.4 Git Configuration
+Configure Git identity:
+git config --global user.name "Your Name"
+git config --global user.email "your@email.com"
+Verify:
+git config --list
+
+## 2.5 Installing Docker
+Install Docker:
+sudo apt install docker.io -y
+Start Docker:
+sudo systemctl start docker
+Enable Docker at startup:
+sudo systemctl enable docker
+Verify:
+docker --version
+
+## 2.6 Docker Permissions
+Allow current user to run Docker without sudo:
+sudo usermod -aG docker $USER
+Apply changes:
+newgrp docker
+
+## 2.7 Installing Docker Compose
+Modern Docker Compose uses:
+docker compose
+Verify:
+docker compose version
+
+## 2.8 Installing Node.js
+Install Node.js:
+sudo apt install nodejs npm -y
+Verify:
+node -v
+npm -v
+
+## 2.9 Installing Maven
+Install Maven:
+sudo apt install maven -y
+Verify:
+mvn -version
+Although Maven was not fully used in this project, it is commonly used in Java DevOps pipelines.
+
+## 2.10 Installing Jenkins Using Docker
+Create Jenkins persistent volume:
+docker volume create jenkins_home
+Run Jenkins container:
+docker run -d \
+  --name jenkins \
+  -u root \
+  -p 9090:8080 \
+  -p 50000:50000 \
+  -v jenkins_home:/var/jenkins_home \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  jenkins/jenkins:lts
+
+## 2.11 Explanation of Jenkins Docker Command
+Option	Meaning
+-d	Detached mode
+–name	Container name
+-u root	Run as root user
+-p 9090:8080	Port mapping
+-v	Volume mounting
+docker.sock	Docker daemon access
+
+## 2.12 Accessing Jenkins
+Open browser:
+http://localhost:9090
+Retrieve admin password:
+docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword
+
+
+# 3. Project Structure
+## 3.1 Root Project Structure
+
+two-tier-app/
+│
+├── backend/
+├── frontend/
+├── docker-compose.yml
+├── Jenkinsfile
+└── .gitignore
+
+## 3.2 Backend Structure
+backend/
+│
+├── Dockerfile
+├── package.json
+├── package-lock.json
+└── server.js
+
+## 3.3 Frontend Structure
+frontend/
+│
+├── Dockerfile
+├── package.json
+├── public/
+├── src/
+└── .gitignore
+
+## 3.4 Important Files
+### server.js
+Main backend API file.
+
+### package.json
+Contains:
+•	project metadata
+•	dependencies
+•	scripts
+
+### Dockerfile
+Defines Docker image instructions.
+
+### docker-compose.yml
+Defines multi-container deployment.
+
+### Jenkinsfile
+Defines CI/CD pipeline stages.
+
+# 4. Git and GitHub Workflow
+## 4.1 Creating Repository
+Create repository on GitHub.
+Example:
+two-tier-app
+
+## 4.2 Initialize Git
+Inside project:
+git init
+
+## 4.3 Add Remote Repository
+git remote add origin <repository-url>
+
+## 4.4 Git Add
+Track files:
+git add .
+
+## 4.5 Git Commit
+Save changes:
+git commit -m "Initial commit"
+
+## 4.6 Push to GitHub
+git push -u origin main
+
+## 4.7 Pull Changes
+git pull origin main
+
+## 4.8 Branching Strategy
+This is not the strategy i used but I would recommend this one:
+main
+feature/frontend
+feature/backend
+
+## 4.9 Merge Conflicts
+Conflicts occur when two versions modify the same file.
+Resolve manually then commit.
+
+## 4.10 Git Best Practices
+•	commit often
+•	write meaningful commit messages
+•	avoid pushing secrets
+•	use branches
+•	pull before push
+
+# 5. Backend Development
+5.1 Creating Backend
+Create backend folder:
+mkdir backend
+cd backend
+Initialize npm:
+________________________________________
+5.2 Install Dependencies
+npm init -y
+npm install express cors
+________________________________________
+5.3 Backend server.js
+Example:
+const express = require('express');
+const cors = require('cors');
+
+const app = express();
+
+app.use(cors());
+
+app.get('/', (req, res) => {
+    res.send('Backend is running successfully!');
+});
+
+app.listen(5000, () => {
+    console.log('Server running on port 5000');
+});
+________________________________________
+5.4 Backend Explanation
+Code	Purpose
+express()	Create server
+cors()	Allow frontend requests
+app.get()	Create API endpoint
+app.listen()	Start server
+________________________________________
+5.5 Run Backend Locally
+node server.js
+Test:
+http://localhost:5000
+________________________________________
+5.6 Backend Dockerfile
+FROM node:18
+
+WORKDIR /app
+
+COPY package*.json ./
+
+RUN npm install
+
+COPY . .
+
+EXPOSE 5000
+
+CMD ["node", "server.js"]
+________________________________________
+5.7 Backend Dockerfile Explanation
+Instruction	Purpose
+FROM	Base image
+WORKDIR	Working directory
+COPY	Copy files
+RUN	Execute command
+EXPOSE	Open port
+CMD	Startup command
+________________________________________
+6. Frontend Development
+6.1 Create Frontend
+npx create-react-app frontend
+________________________________________
+6.2 Frontend API Connection
+Correct Docker networking:
+fetch("http://backend:5000")
+NOT:
+fetch("http://localhost:5000")
+________________________________________
+6.3 Why localhost Fails Inside Containers
+Inside containers:
+localhost = current container
+Containers communicate using service names.
+________________________________________
+6.4 Frontend Dockerfile
+FROM node:18
+
+WORKDIR /app
+
+COPY package*.json ./
+
+RUN npm install
+
+COPY . .
+
+EXPOSE 3000
+
+CMD ["npm", "start"]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
