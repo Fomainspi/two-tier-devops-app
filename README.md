@@ -323,18 +323,18 @@ Resolve manually then commit.
 •	pull before push
 
 # 5. Backend Development
-5.1 Creating Backend
+## 5.1 Creating Backend
 Create backend folder:
 mkdir backend
 cd backend
 Initialize npm:
-________________________________________
-5.2 Install Dependencies
+
+## 5.2 Install Dependencies
 npm init -y
 npm install express cors
-________________________________________
-5.3 Backend server.js
-Example:
+
+## 5.3 Backend server.js
+
 const express = require('express');
 const cors = require('cors');
 
@@ -349,20 +349,20 @@ app.get('/', (req, res) => {
 app.listen(5000, () => {
     console.log('Server running on port 5000');
 });
-________________________________________
-5.4 Backend Explanation
-Code	Purpose
-express()	Create server
-cors()	Allow frontend requests
-app.get()	Create API endpoint
+
+## 5.4 Backend Explanation
+## Code	         Purpose
+express()	      Create server
+cors()	      Allow frontend requests
+app.get()	      Create API endpoint
 app.listen()	Start server
-________________________________________
-5.5 Run Backend Locally
+
+## 5.5 Run Backend Locally
 node server.js
 Test:
 http://localhost:5000
-________________________________________
-5.6 Backend Dockerfile
+
+## 5.6 Backend Dockerfile
 FROM node:18
 
 WORKDIR /app
@@ -376,8 +376,8 @@ COPY . .
 EXPOSE 5000
 
 CMD ["node", "server.js"]
-________________________________________
-5.7 Backend Dockerfile Explanation
+
+## 5.7 Backend Dockerfile Explanation
 Instruction	Purpose
 FROM	Base image
 WORKDIR	Working directory
@@ -385,23 +385,24 @@ COPY	Copy files
 RUN	Execute command
 EXPOSE	Open port
 CMD	Startup command
-________________________________________
-6. Frontend Development
-6.1 Create Frontend
+
+# 6. Frontend Development
+## 6.1 Create Frontend
 npx create-react-app frontend
-________________________________________
-6.2 Frontend API Connection
+
+## 6.2 Frontend API Connection
 Correct Docker networking:
 fetch("http://backend:5000")
 NOT:
 fetch("http://localhost:5000")
-________________________________________
-6.3 Why localhost Fails Inside Containers
+
+## 6.3 Why localhost Fails Inside Containers
 Inside containers:
 localhost = current container
 Containers communicate using service names.
-________________________________________
-6.4 Frontend Dockerfile
+
+## 6.4 Frontend Dockerfile
+
 FROM node:18
 
 WORKDIR /app
@@ -416,10 +417,342 @@ EXPOSE 3000
 
 CMD ["npm", "start"]
 
+## 6.5 Frontend Dockerfile Explanation
+
+<img width="540" height="218" alt="image" src="https://github.com/user-attachments/assets/d5ad3008-7b51-406c-9a39-2bedd37b18f2" />
+
+# 7. Docker and Docker Compose
+## 7.1 What is Docker?
+Docker is a containerization platform.
+It packages applications with:
+•	code
+•	dependencies
+•	runtime
+•	libraries
+
+## 7.2 Images vs Containers
+Images	Containers
+Blueprint	Running instance
+Static	Dynamic
+Build artifact	Execution environment
+
+## 7.3 Docker Build
+docker build -t backend-app .
+
+## 7.4 Docker Run
+docker run -p 5000:5000 backend-app
+
+## 7.5 Docker Networks
+Docker networks allow containers to communicate.
+Docker Compose automatically creates networks.
+
+## 7.6 Docker Volumes
+Volumes store persistent data.
+
+docker volume create jenkins_home
+
+## 7.7 Docker Compose File
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "5000:5000"
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3001:3000"
+    depends_on:
+      - backend
+
+## 7.8 Docker Compose Explanation
+## Section	       Purpose
+services	    Define containers
+build	Build     context
+ports	          Port mapping
+depends_on	    Service dependency
+
+## 7.9 Port Mapping Explanation
+Example:
+3001:3000
+Means:
+Host	Container
+3001	3000
+
+## 7.10 Build and Start Containers
+docker compose up --build
+Detached mode:
+docker compose up -d
 
 
+# 8. CI/CD Pipeline
+## 8.1 What is CI/CD?
+CI/CD means:
+Term	Meaning
+CI	Continuous Integration
+CD	Continuous Delivery/Deployment
+
+## 8.2 Jenkins Pipeline Overview
+### Pipeline stages:
+GitHub
+ ↓
+Clone Repository
+ ↓
+Build Containers
+ ↓
+Deploy Application
+
+## 8.3 Jenkinsfile
+pipeline {
+    agent any
+
+    stages {
+
+        stage('Clone Repository') {
+            steps {
+                echo 'Cloning repository from GitHub...'
+            }
+        }
+
+        stage('Build Application') {
+            steps {
+                echo 'Building Docker Compose services...'
+                sh 'docker compose build'
+            }
+        }
+
+        stage('Deploy Application') {
+            steps {
+                sh 'docker compose down || true'
+                sh 'docker compose up -d'
+            }
+        }
+
+    }
+}
+
+## 8.4 Jenkinsfile Explanation
+### pipeline
+Defines CI/CD pipeline.
+
+### agent any
+Run on any Jenkins agent.
+
+### stage
+Defines pipeline phase.
+
+### steps
+Commands executed in stage.
+
+### sh
+Execute Linux shell commands.
+
+## 8.5 Jenkins Pipeline Setup
+1.	Create new pipeline job
+2.	Select Pipeline
+3.	Use Pipeline script from SCM
+4.	Select Git
+5.	Add GitHub repository
+6.	Use Jenkinsfile
+7.	Save
+8.	Build Now
+
+# 9. Troubleshooting Guide
+## 9.1 Port Conflict Errors
+### Error
+port is already allocated
+
+### Cause
+Another container already used the port.
+
+### Diagnosis
+docker ps
+
+### Solution
+Remove conflicting container or use another port.
+
+### Best Practice
+Use cleanup stage:
+docker compose down
+
+## 9.2 Frontend Cannot Connect to Backend
+### Error
+Failed to connect to backend
+
+### Cause
+Frontend used localhost.
+
+### Wrong
+http://localhost:5000
+
+### Correct
+http://backend:5000
+
+### Best Practice
+Use Docker service names.
+
+## 9.3 Docker Compose Command Not Found
+### Error
+docker compose: command not found
+
+### Cause
+Docker Compose plugin missing.
+
+### Solution
+Install Docker Compose plugin.
+sudo apt update
+sudo apt install docker-compose-plugin
+
+## 9.4 Docker Permission Denied
+### Error
+permission denied while trying to connect to docker.sock
+
+### Cause
+Jenkins lacked Docker socket permission.
+
+### Solution
+Run Jenkins with:
+-u root
+or use Docker group permissions.
+
+## 9.5 Jenkins Container Name Conflict
+### Error
+container name already in use
+
+### Cause
+Fixed container names caused conflicts.
+
+### Solution
+Remove:
+container_name
+from compose file.
+
+## 9.6 Frontend Dockerfile Missing
+### Error
+failed to read Dockerfile
+
+### Cause
+Dockerfile ignored by Git.
+
+### Solution
+Force add file:
+git add -f frontend/Dockerfile
+
+## 9.7 Git Submodule Problems
+### Error
+Pathspec is in submodule
+
+### Cause
+Frontend initialized as nested Git repository.
+
+### Solution
+rm -rf frontend/.git
+git rm --cached frontend
+Re-add folder normally.
+
+## 10. Commands Reference
+
+<img width="910" height="457" alt="image" src="https://github.com/user-attachments/assets/db47b4c6-ebb0-4a6d-b336-14badf344b9f" />
 
 
+## 11. Best Practices
+### Docker Best Practices
+•	avoid hardcoded container names
+•	use environment variables
+•	keep images lightweight
+•	use .dockerignore
+•	separate services properly
+________________________________________
+Git Best Practices
+•	commit frequently
+•	use meaningful commit messages
+•	avoid committing secrets
+•	use branches
+________________________________________
+CI/CD Best Practices
+•	automate deployments
+•	use cleanup stages
+•	separate build and deploy stages
+•	avoid manual deployments
+________________________________________
+Security Best Practices
+•	avoid root containers in production
+•	protect secrets
+•	avoid exposing unnecessary ports
+•	use least privilege
+________________________________________
+12. Real-World DevOps Concepts
+This project reflects real company workflows.
+Real companies use:
+•	GitHub
+•	Jenkins
+•	Docker
+•	CI/CD pipelines
+•	automated deployments
+•	container orchestration
+This project simulates:
+Developer pushes code
+       ↓
+CI/CD pipeline starts
+       ↓
+Containers build automatically
+       ↓
+Application deploys automatically
+________________________________________
+13. Final Deployment Flow
+Developer
+   ↓
+Git Commit
+   ↓
+Git Push
+   ↓
+GitHub Repository
+   ↓
+Jenkins Pipeline Trigger
+   ↓
+Clone Repository
+   ↓
+Docker Compose Build
+   ↓
+Docker Compose Deployment
+   ↓
+Frontend Container
+   ↓
+Backend Container
+   ↓
+Application Available
+________________________________________
+14. Conclusion
+This project covered a complete beginner-to-intermediate DevOps workflow.
+Key concepts learned:
+•	Linux administration
+•	Git and GitHub
+•	Node.js backend development
+•	React frontend development
+•	Docker containerization
+•	Docker Compose orchestration
+•	Jenkins CI/CD pipelines
+•	Pipeline troubleshooting
+•	Container networking
+•	Port management
+•	CI/CD automation
+•	Infrastructure debugging
+This project reflects real-world DevOps engineering practices used in modern companies.
+By completing this project, the learner gains hands-on experience with:
+•	application deployment
+•	automation
+•	container management
+•	CI/CD workflows
+•	DevOps troubleshooting
+•	infrastructure concepts
+This forms a strong foundation for advanced DevOps topics such as:
+•	Kubernetes
+•	Terraform
+•	AWS deployment
+•	Monitoring
+•	Infrastructure as Code
+•	Advanced CI/CD pipelines
+•	Cloud-native architectures
 
 
 
