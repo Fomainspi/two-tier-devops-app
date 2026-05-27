@@ -147,7 +147,9 @@ Always update packages before installations.
 Command:
 sudo apt update && sudo apt upgrade -y
 
+
 Explanation:
+
 <img width="540" height="156" alt="image" src="https://github.com/user-attachments/assets/1195e4c7-00ee-41de-af22-10aeafd2228d" />
 
 
