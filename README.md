@@ -73,20 +73,7 @@ Docker Build
    ↓
 Docker Compose Deployment
 
-##1.4 Technologies Used
-
-Technology	Purpose
-Linux	Operating system
-Git	Version control
-GitHub	Remote repository
-Node.js	Backend runtime
-Express.js	Backend framework
-React.js	Frontend framework
-Docker	Containerization
-Docker Compose	Multi-container orchestration
-Jenkins	CI/CD automation
-npm	Package management
-
+## 1.4 Technologies Used
 
 <img width="615" height="320" alt="image" src="https://github.com/user-attachments/assets/e8cb2f69-82e0-4b7b-ad81-80bf584a3004" />
 
