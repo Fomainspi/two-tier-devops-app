@@ -236,6 +236,14 @@ docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword
 
 <img width="244" height="254" alt="image" src="https://github.com/user-attachments/assets/b831659f-476a-4941-89b0-14bdeba8fb04" />
 
+two-tier-app/
+│
+├── backend/
+├── frontend/
+├── docker-compose.yml
+├── Jenkinsfile
+└── .gitignore
+
 
 ## 3.2 Backend Structure
 backend/
